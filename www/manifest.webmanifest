@@ -1,0 +1,20 @@
+{
+  "name": "Mi Diario",
+  "short_name": "Mi Diario",
+  "description": "Tu diario personal: escribe, guarda fotos y recuerda.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#efe3cc",
+  "theme_color": "#6d4c2f",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
