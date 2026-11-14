@@ -1,61 +1,82 @@
-# Mi Diario 📖
+# Mi Refugio 💜
 
-Tu diario personal: escribe, guarda fotos, elige tu estado de ánimo y navega entre páginas con animaciones de libro.
-
-App Android generada con [Capacitor](https://capacitorjs.com) a partir de una PWA. Funciona offline: todo se guarda en el dispositivo (IndexedDB).
-
-## Compilar el APK en GitHub (automático)
-
-Este repo incluye un workflow de GitHub Actions (`.github/workflows/build-apk.yml`) que compila el APK en cada push a `main`:
-
-1. Ve a la pestaña **Actions** del repositorio.
-2. Abre el run **Build APK**.
-3. En la sección **Artifacts**, descarga **mi-diario-apk** → `app-debug.apk`.
-4. En el móvil, abre el APK y acepta "instalar de origen desconocido".
-
-También puedes lanzarlo manualmente: **Actions → Build APK → Run workflow**.
-
-## Compilar en local (opcional)
-
-```bash
-npm install
-npx cap add android
-cd android && ./gradlew assembleDebug
-```
-APK en `android/app/build/outputs/apk/debug/app-debug.apk`.
-
-## Probar la versión web
-
-```bash
-cd www
-python3 -m http.server 8080
-```
-En Chrome: menú → **Añadir a pantalla de inicio**.
+Tu diario personal: un espacio cuidadoso para escribir apuntes, guardar fotos y tener compañía en los días difíciles. **100% privado**: sin cuentas ni servidores, todo vive en tu dispositivo (IndexedDB).
 
 ## Funciones
 
-- ✍️ Escribir entradas con título, fecha, texto y estado de ánimo (emoji).
-- 📷 Varias fotos por entrada, comprimidas automáticamente.
-- 📖 Animación de paso de página (efecto hoja 3D) y efectos de tinta al escribir.
-- 🔍 Búsqueda, agrupación por meses, lightbox de fotos, borrado con confirmación.
-- 📴 Offline total.
+- 📖 **Entradas de diario** con fecha y hora automáticas, título opcional, texto con formato básico (negrita, cursiva, listas), etiquetas y color de tarjeta.
+- 🗒 **Apuntes locos**: post-its desordenados en un mural, arrastrables y con colores aleatorios, para ideas sueltas, impulsos y sueños.
+- 📷 **Fotos** desde galería o cámara, comprimidas automáticamente (máx. 1600px, calidad 0.8). Galería tipo polaroid con descripción y lightbox.
+- 🌈 **Estado de ánimo** (feliz, tranquilo, neutral, triste, ansioso, agotado, caótico) con color visible en el calendario.
+- 🗓 **Calendario** mensual con marcas de ánimo y corazones para entradas de días difíciles.
+- 🔍 **Búsqueda** por texto, #etiqueta o ánimo.
+- 💾 **Exportar/importar** respaldo completo en JSON (con fotos en base64).
+- 🔒 **Bloqueo opcional** con PIN de 4 dígitos (guardado como hash SHA-256, nunca en texto plano).
+
+## Modo "días difíciles" 💗
+
+Se activa con el botón de corazón de la cabecera:
+
+- Paleta suave (lavanda, durazno, verde salvia) y bajo contraste.
+- Frases de acompañamiento: "Está bien no estar bien hoy", "Solo escribe lo que puedas"…
+- Preguntas guía opcionales, nunca obligatorias.
+- Sin rachas, conteos ni Culpa™.
+- Sección de apoyo con **Línea Vida Uruguay (0800 0767)** y **Emergencias (911)**.
+- Animaciones más lentas y suaves.
+
+## Animaciones
+
+- 📔 **Portada**: cuaderno cerrado con sello que se abre con rotación 3D al tocarlo (con botón "omitir").
+- 📄 **Cambio de página** con efecto de hoja (rotateY + sombra en el lomo) o modo suave (fade + desplazamiento), configurable en Ajustes.
+- ✨ Micro-interacciones: rebote en botones, polaroids que se enderezan, confeti y corazones al guardar.
+- ♿ Respeta `prefers-reduced-motion`: solo transiciones de opacidad.
+
+## Stack
+
+React 18 · Vite 5 · TypeScript · Tailwind CSS 3 · Framer Motion 11 · idb (IndexedDB) · Lucide React · Capacitor (APK).
+
+## Compilar el APK en GitHub
+
+El workflow `.github/workflows/build-apk.yml` compila el APK en cada push a `main`:
+
+1. Pestaña **Actions** → run **Build APK**.
+2. Sección **Artifacts** → descargar **mi-refugio-apk** → `app-debug.apk`.
+
+En local:
+
+```bash
+npm install
+npm run build        # TypeScript + Vite → dist/
+npx cap add android  # solo la primera vez
+npx cap sync android
+cd android && ./gradlew assembleDebug
+```
+
+## Desarrollo web
+
+```bash
+npm install
+npm run dev
+```
 
 ## Estructura
 
 ```
-├── www/                        # app web (la que empaqueta Capacitor)
-│   ├── index.html
-│   ├── css/styles.css          # diseño cuaderno + animaciones
-│   ├── js/db.js                # IndexedDB (capa de datos aislada)
-│   ├── js/app.js               # lógica, vistas, animaciones
-│   ├── manifest.webmanifest
-│   ├── sw.js                   # caché offline
-│   └── icons/icon.svg
+├── src/
+│   ├── App.tsx                 # orquestador de vistas y estado global
+│   ├── types.ts                # tipos principales (Entrada, Ajustes…)
+│   ├── lib/
+│   │   ├── db.ts               # IndexedDB (idb): entradas y ajustes
+│   │   ├── datos.ts            # ánimos, colores, frases y preguntas
+│   │   └── utils.ts            # fechas, fotos, markdown, PIN, respaldo
+│   ├── hooks/
+│   │   ├── useAjustes.tsx      # contexto de ajustes (tema, PIN, modo difícil)
+│   │   └── useEntradas.ts      # CRUD de entradas
+│   └── components/             # portada, editor, calendario, galería…
 ├── capacitor.config.json
-├── package.json
 └── .github/workflows/build-apk.yml
 ```
 
-## Sincronización en la nube (futuro)
+## Privacidad
 
-`www/js/db.js` está aislada como capa de datos: se puede añadir Firebase/Supabase o un servidor propio sin tocar el resto de la app.
+No hay servidor, ni cuentas, ni analítica. Tus entradas y fotos se guardan cifradas por el sistema operativo dentro de la app. Usa **Exportar** de vez en cuando para tener una copia de seguridad.
