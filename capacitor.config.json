@@ -1,7 +1,7 @@
 {
-  "appId": "com.cristoferechevaleta.midario",
-  "appName": "Mi Diario",
-  "webDir": "www",
+  "appId": "com.cristoferechevaleta.mirefugio",
+  "appName": "Mi Refugio",
+  "webDir": "dist",
   "server": {
     "androidScheme": "https"
   }
