@@ -1,0 +1,100 @@
+/* Estilos base y paletas de Mi Refugio */
+
+:root {
+  --fondo: #f1ebe0;
+  --papel: #faf6ee;
+  --papel-borde: #e3d9c8;
+  --tinta: #3a3145;
+  --tinta-suave: #6f6580;
+  --acento: #8b7fa8;
+  --acento-suave: #d8cfee;
+  --sombra: rgba(58, 49, 69, 0.16);
+}
+
+.dark {
+  --fondo: #17141f;
+  --papel: #221d30;
+  --papel-borde: #362e48;
+  --tinta: #e8e2f2;
+  --tinta-suave: #a89fc0;
+  --acento: #b3a5d6;
+  --acento-suave: #3d3455;
+  --sombra: rgba(0, 0, 0, 0.45);
+}
+
+/* Modo días difíciles: paleta cálida, suave y de bajo contraste */
+.modo-dificil {
+  --fondo: #f5efe7;
+  --papel: #fbf6f0;
+  --papel-borde: #e9ddd2;
+  --tinta: #5c5250;
+  --tinta-suave: #94837e;
+  --acento: #c99a7e;
+  --acento-suave: #f0dcc9;
+  --sombra: rgba(92, 82, 80, 0.12);
+}
+
+.modo-dificil.dark {
+  --fondo: #201b22;
+  --papel: #2b2530;
+  --papel-borde: #3f3742;
+  --tinta: #e6dcd8;
+  --tinta-suave: #b3a39e;
+  --acento: #d4a98c;
+  --acento-suave: #463c40;
+  --sombra: rgba(0, 0, 0, 0.4);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Nunito", system-ui, sans-serif;
+  background: var(--fondo);
+  color: var(--tinta);
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Superficies de papel reutilizables */
+.papel {
+  background: var(--papel);
+  border: 1px solid var(--papel-borde);
+}
+
+.texto-suave {
+  color: var(--tinta-suave);
+}
+
+/* Texto enriquecido de las entradas */
+.texto-entrada p {
+  margin: 0 0 0.6rem;
+}
+.texto-entrada ul,
+.texto-entrada ol {
+  margin: 0 0 0.6rem 1.2rem;
+}
+.texto-entrada ul {
+  list-style: disc;
+}
+.texto-entrada ol {
+  list-style: decimal;
+}
+.texto-entrada li {
+  margin-bottom: 0.2rem;
+}
+.texto-entrada strong {
+  font-weight: 700;
+}
+
+/* Ocultar barras de scroll en la navegación */
+.sin-scroll::-webkit-scrollbar {
+  display: none;
+}
+.sin-scroll {
+  scrollbar-width: none;
+}
